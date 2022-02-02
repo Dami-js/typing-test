@@ -22,7 +22,7 @@ const TypingScreen = () => {
   const [timeLeft, setTimeLeft] = React.useState(time * 60);
   const [start, setStart] = React.useState(false);
   const [done, setDone] = React.useState(false);
-  const [result, setResult] = React.useState(0);
+  const [result, setResult] = React.useState({ points: 0, score: 0 });
   const phraseArray = testPhrase.split(" ");
 
   const getTimeLeft = React.useMemo(() => {
@@ -43,7 +43,8 @@ const TypingScreen = () => {
 
   const handleViewResult = () => {
     const _result = calculatePoints(phraseArray, valueArray);
-    setResult(_result);
+    const score = Math.round((_result / phraseArray.length) * 100);
+    setResult({ points: _result, score });
   };
 
   const handleRetry = () => {
@@ -51,7 +52,7 @@ const TypingScreen = () => {
     setValue("");
     setValueArray([]);
     setDone(false);
-    setResult(0);
+    setResult({ points: 0, score: 0 });
   };
 
   React.useEffect(() => {
@@ -100,9 +101,17 @@ const TypingScreen = () => {
         <div className="text-center mt-10">
           <p className="text-4xl">Time up!</p>
           <div className="my-8">
-            <p className="text-2xl text-gray-500">Points</p>
-            <p className="text-4xl font-bold">
-              {result} / {phraseArray.length}
+            <p className="text-2xl text-gray-500">
+              Points{" "}
+              <span className="text-3xl text-gray-700 font-bold">
+                {result.points}
+              </span>
+            </p>
+            <p className="text-2xl text-gray-500">
+              Score{" "}
+              <span className="text-3xl text-gray-700 font-bold">
+                {result.score}%
+              </span>
             </p>
           </div>
           <Button className="mt-4" onClick={handleRetry}>
