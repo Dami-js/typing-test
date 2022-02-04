@@ -9,7 +9,7 @@ const StartScreen = () => {
   const { setView } = useAppContext();
   return (
     <div>
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex flex-wrap items-center justify-between mb-10">
         <SetTimer />
         <Button onClick={() => setView(Views.Typing)}>Start</Button>
       </div>
